@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.env.local
+.venv/
+venv/
+
+# Node
+node_modules/
+.next/
+out/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Test artifacts
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Misc
+.DS_Store
+*.log
