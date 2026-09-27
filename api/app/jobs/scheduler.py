@@ -88,6 +88,11 @@ def _build_job_registry(settings):
         from app.jobs.reverify import run_reverify
         jobs.append((1004, "reverify", settings.REVERIFY_MINUTES * 60, run_reverify))
 
+    # Retention purge (runs daily)
+    if True:
+        from app.jobs.purge import run_purge
+        jobs.append((1005, "purge", 24 * 3600, run_purge))
+
     return jobs
 
 

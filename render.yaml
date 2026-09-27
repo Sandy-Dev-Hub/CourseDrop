@@ -1,0 +1,65 @@
+services:
+  # Web frontend (Next.js)
+  - type: web
+    name: coursedrop-web
+    runtime: node
+    rootDir: web
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: coursedrop-api
+          property: host
+
+  # Backend API (FastAPI)
+  - type: web
+    name: coursedrop-api
+    runtime: python
+    rootDir: api
+    buildCommand: pip install -r requirements.txt && alembic upgrade head
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: coursedrop-db
+          property: connectionString
+      - key: ADMIN_API_KEY
+        generateValue: true
+      - key: CORS_ALLOWED_ORIGINS
+        fromService:
+          type: web
+          name: coursedrop-web
+          property: host
+      - key: ALLOWED_TRACKING_HOSTS
+        sync: false
+
+  # Background Worker / Scheduler
+  - type: worker
+    name: coursedrop-scheduler
+    runtime: python
+    rootDir: api
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.jobs.scheduler
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: coursedrop-db
+          property: connectionString
+      - key: SCHEDULER_ENABLED
+        value: "true"
+      - key: ALLOWED_TRACKING_HOSTS
+        sync: false
+
+databases:
+  - name: coursedrop-db
+    databaseName: coursedrop
+    user: coursedrop
+    plan: free

@@ -7,13 +7,19 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
-from app.core.database import engine, Base
-from app.routes import health, admin_offers, admin_jobs, admin_collections, public_courses
+from app.routes import (
+    admin_collections,
+    admin_jobs,
+    admin_offers,
+    health,
+    public_categories,
+    public_courses,
+    public_offers,
+)
 
 
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application."""
-    # Validate settings at startup — will sys.exit(1) on failure
     try:
         settings = get_settings()
     except Exception as exc:
@@ -27,7 +33,7 @@ def create_app() -> FastAPI:
         redoc_url=None,
     )
 
-    # CORS
+    # CORS configuration
     origins = [o.strip() for o in settings.CORS_ALLOWED_ORIGINS.split(",") if o.strip()]
     app.add_middleware(
         CORSMiddleware,
@@ -37,12 +43,18 @@ def create_app() -> FastAPI:
         allow_headers=["Content-Type", "X-API-Key"],
     )
 
-    # Routes
+    # Health check
     app.include_router(health.router, prefix="/api")
-    app.include_router(public_courses.router, prefix="/api")
-    app.include_router(admin_offers.router, prefix="/api/admin")
-    app.include_router(admin_jobs.router, prefix="/api/admin")
-    app.include_router(admin_collections.router, prefix="/api/admin")
+
+    # Public API (v1)
+    app.include_router(public_offers.router, prefix="/api/v1")
+    app.include_router(public_categories.router, prefix="/api/v1")
+    app.include_router(public_courses.router, prefix="/api/v1")
+
+    # Admin API (v1)
+    app.include_router(admin_offers.router, prefix="/api/v1/admin")
+    app.include_router(admin_jobs.router, prefix="/api/v1/admin")
+    app.include_router(admin_collections.router, prefix="/api/v1/admin")
 
     return app
 
