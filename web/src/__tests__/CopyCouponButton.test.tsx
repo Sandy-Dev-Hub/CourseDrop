@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import "@testing-library/jest-dom";
 import { CopyCouponButton } from "@/components/CopyCouponButton";
 
 describe("CopyCouponButton", () => {
@@ -14,7 +15,7 @@ describe("CopyCouponButton", () => {
   it("renders coupon code text", () => {
     render(<CopyCouponButton code="SAVE50" />);
     expect(screen.getByText("SAVE50")).toBeInTheDocument();
-    expect(screen.getByText("📋 Copy")).toBeInTheDocument();
+    expect(screen.getByText(/Copy/i)).toBeInTheDocument();
   });
 
   it("copies code to clipboard on click and updates text", async () => {
@@ -23,6 +24,6 @@ describe("CopyCouponButton", () => {
     fireEvent.click(button);
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith("SAVE50");
-    expect(await screen.findByText("✓ Copied")).toBeInTheDocument();
+    expect(await screen.findByText(/Copied/i)).toBeInTheDocument();
   });
 });

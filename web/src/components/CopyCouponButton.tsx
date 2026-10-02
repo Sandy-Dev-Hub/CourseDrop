@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IconCheck, IconCopy } from "./Icons";
 
 interface CopyCouponButtonProps {
   code: string;
@@ -26,11 +27,23 @@ export function CopyCouponButton({ code }: CopyCouponButtonProps) {
       onClick={handleCopy}
       type="button"
       aria-label={`Copy coupon code ${code}`}
-      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-dashed border-indigo-500/50 bg-indigo-950/30 text-xs font-mono font-medium text-indigo-300 hover:bg-indigo-900/50 transition-colors"
+      className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl border border-dashed border-[var(--border-subtle)] bg-[var(--bg-surface)] text-xs font-mono font-medium text-[var(--accent-sage)] hover:border-[var(--accent-sage)] hover:bg-[var(--accent-sage-soft)] active:scale-[0.99] transition-all"
     >
-      <span>{code}</span>
-      <span className="text-[10px] text-indigo-400">
-        {copied ? "✓ Copied" : "📋 Copy"}
+      <span className="font-bold text-[var(--text-primary)] tracking-wide truncate max-w-[150px] sm:max-w-[180px]">
+        {code}
+      </span>
+      <span className="inline-flex items-center text-[11px] font-sans font-medium text-[var(--text-secondary)] shrink-0">
+        {copied ? (
+          <span className="inline-flex items-center gap-1 text-[var(--accent-free)] font-semibold">
+            <IconCheck size={12} />
+            <span>Copied</span>
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1 text-[var(--text-muted)] hover:text-[var(--text-primary)]">
+            <IconCopy size={12} className="opacity-75" />
+            <span>Copy</span>
+          </span>
+        )}
       </span>
     </button>
   );

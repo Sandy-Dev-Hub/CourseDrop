@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { CategoryNav } from "@/components/CategoryNav";
 import { Navbar } from "@/components/Navbar";
 import { OfferCard } from "@/components/OfferCard";
+import { SearchBar } from "@/components/SearchBar";
+import { MotionFadeIn, MotionStaggerContainer, MotionStaggerItem } from "@/components/MotionWrapper";
+import { IconSparkles } from "@/components/Icons";
 import { fetchCategories, fetchOffers } from "@/lib/api";
 
 interface CategoryPageProps {
@@ -13,7 +15,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const { slug } = await params;
   const name = slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   return {
-    title: `${name} Coursera Deals & Discounts — CourseDrop`,
+    title: `${name} Coursera Deals & Discounts - CourseDrop`,
     description: `Browse verified Coursera discounts and coupons for ${name} courses.`,
   };
 }
@@ -30,48 +32,55 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const offers = offersData.items;
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-950 text-gray-100">
+    <div className="flex min-h-screen flex-col bg-[var(--bg-page)] text-[var(--text-primary)] relative">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         {/* Header */}
-        <section className="border-b border-gray-800 bg-gradient-to-b from-gray-900 to-gray-950 py-12 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl text-center">
-            <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              {title} Coursera Deals
-            </h1>
-            <p className="mx-auto mt-2 max-w-2xl text-sm text-gray-400">
-              Verified promotions and discounted courses in {title}.
-            </p>
+        <section className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] py-14 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <MotionFadeIn delay={0.1}>
+              <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)]">
+                {title} Deals & Coupons
+              </h1>
+            </MotionFadeIn>
+
+            <MotionFadeIn delay={0.3}>
+              <p className="mx-auto mt-3 max-w-xl text-xs sm:text-sm text-[var(--text-secondary)]">
+                Verified promotions, fee waivers, and course discounts in {title}.
+              </p>
+            </MotionFadeIn>
+
+            <MotionFadeIn delay={0.4}>
+              <div className="mt-8 mx-auto max-w-xl">
+                <SearchBar placeholder={`Search in ${title}...`} />
+              </div>
+            </MotionFadeIn>
           </div>
         </section>
 
         {/* Categories Bar */}
-        <div className="border-b border-gray-800/80 bg-gray-950/60 sticky top-14 z-40 backdrop-blur-md">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3">
+        <div className="border-b border-[var(--border-subtle)] bg-[var(--bg-page)]/90 sticky top-16 z-40 backdrop-blur-md">
+          <div className="mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16 py-2.5">
             <CategoryNav categories={categories} activeSlug={slug} />
           </div>
         </div>
 
         {/* Deals Grid */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-          {offers.length === 0 ? (
-            <div className="rounded-xl border border-gray-800 bg-gray-900/30 p-12 text-center">
-              <span className="text-3xl">📂</span>
-              <h3 className="mt-3 text-base font-semibold text-white">
-                No active deals in {title} right now
-              </h3>
-              <p className="mt-1 text-sm text-gray-400">
-                Check back soon or explore other categories.
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {offers.map((offer) => (
-                <OfferCard key={offer.id} offer={offer} />
-              ))}
-            </div>
-          )}
+        <section className="mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16 py-12">
+          <div className="flex items-center justify-between mb-8">
+            <p className="text-xs text-[var(--text-secondary)]">
+              Showing <span className="font-semibold text-[var(--text-primary)]">{offers.length}</span> active deals in {title}
+            </p>
+          </div>
+
+          <MotionStaggerContainer className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
+            {offers.map((offer) => (
+              <MotionStaggerItem key={offer.id}>
+                <OfferCard offer={offer} />
+              </MotionStaggerItem>
+            ))}
+          </MotionStaggerContainer>
         </section>
       </main>
     </div>

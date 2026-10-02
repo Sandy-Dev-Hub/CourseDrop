@@ -1,4 +1,6 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import "@testing-library/jest-dom";
 import { AffiliateDisclosure } from "@/components/AffiliateDisclosure";
 
 // Mock next/link since we're testing components outside Next.js context

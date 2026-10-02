@@ -2,19 +2,25 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "CourseDrop — Coursera Deals & Discounts",
+    default: "CourseDrop - Coursera Deals & Discounts",
     template: "%s | CourseDrop",
   },
   description:
-    "Discover the latest Coursera course deals, discounts, and free coupons. CourseDrop tracks offers so you never miss a deal.",
+    "Discover verified Coursera course deals, discounts, and free coupons. CourseDrop tracks educational promotions daily.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   robots: { index: true, follow: true },
 };
 
@@ -24,10 +30,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-gray-950 text-gray-100 antialiased">
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+    <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('cd_theme');
+                  var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var theme = stored ? stored : (supportDark ? 'dark' : 'light');
+                  document.documentElement.setAttribute('data-theme', theme);
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-[100dvh] flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)]">
+        <ThemeProvider>
+          <SmoothScrollProvider>
+            <main className="flex-1 flex flex-col">{children}</main>
+            <SiteFooter />
+          </SmoothScrollProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

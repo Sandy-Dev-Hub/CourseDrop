@@ -1,73 +1,89 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Navbar } from "@/components/Navbar";
+import { IconShieldCheck } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "CourseDrop's privacy policy — how we handle your data.",
+  title: "Privacy Policy - CourseDrop",
+  description: "CourseDrop privacy policy - cookieless, privacy-respecting practices.",
 };
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-bold text-white mb-8">Privacy Policy</h1>
+    <div className="flex min-h-screen flex-col bg-[var(--bg-page)] text-[var(--text-primary)]">
+      <Navbar />
 
-      <section className="mb-10">
-        <h2 className="text-xl font-semibold text-gray-100 mb-4">What data we collect</h2>
-        <p className="text-gray-400 mb-4">
-          CourseDrop collects <strong className="text-gray-200">anonymous click events</strong> when you click on an
-          offer. These events record only:
-        </p>
-        <ul className="list-disc list-inside text-gray-400 space-y-2 mb-4">
-          <li>Which offer was clicked (offer ID)</li>
-          <li>An optional anonymous session identifier (no user account required)</li>
-          <li>The page path you clicked from</li>
-        </ul>
-        <p className="text-gray-400">
-          <strong className="text-gray-200">We do not store your IP address or User-Agent string.</strong> Click events
-          cannot be linked back to you individually.
-        </p>
-      </section>
+      <main className="flex-1 mx-auto max-w-3xl w-full px-4 sm:px-6 py-14">
+        <div className="mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
+            Privacy Policy
+          </h1>
+          <p className="mt-2 text-xs text-[var(--text-muted)]">
+            Effective Date: September 2026
+          </p>
+        </div>
 
-      <section className="mb-10">
-        <h2 className="text-xl font-semibold text-gray-100 mb-4">Third-party affiliate tracking</h2>
-        <p className="text-gray-400 mb-4">
-          When you follow an affiliate link, you are redirected to Coursera through an affiliate tracking system (Impact
-          Radius). Impact and/or Coursera may set cookies on your browser to attribute your purchase to CourseDrop. This
-          is outside our control and governed by{" "}
-          <a
-            href="https://www.coursera.org/about/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-gray-200"
-          >
-            Coursera&apos;s Privacy Policy
-          </a>{" "}
-          and Impact&apos;s privacy policy.
-        </p>
-      </section>
+        <div className="space-y-6 text-sm text-[var(--text-secondary)] leading-relaxed">
+          <div className="editorial-card p-6 sm:p-8">
+            <h2 className="text-base font-bold text-[var(--text-primary)] mb-3">
+              1. What Data We Collect
+            </h2>
+            <p className="mb-3">
+              CourseDrop collects <strong className="text-[var(--text-primary)]">anonymous click events</strong> when you choose to open an offer link. These events record only:
+            </p>
+            <ul className="list-disc list-inside space-y-1.5 text-[var(--text-muted)] mb-3">
+              <li>Which offer was clicked (offer ID)</li>
+              <li>A salted, one-way cryptographic hash of IP for bot mitigation (raw IP is never saved)</li>
+              <li>The page path you clicked from</li>
+            </ul>
+            <p className="font-semibold text-[var(--text-primary)]">
+              We do not store your raw IP address or personal identifying information. Click events cannot be linked back to you individually.
+            </p>
+          </div>
 
-      <section className="mb-10">
-        <h2 className="text-xl font-semibold text-gray-100 mb-4">Analytics</h2>
-        <p className="text-gray-400">
-          CourseDrop does not use Google Analytics, Meta Pixel, or any other third-party analytics in V1. If analytics
-          is added in a future version, it will be cookieless only and this policy will be updated first.
-        </p>
-      </section>
+          <div className="editorial-card p-6 sm:p-8">
+            <h2 className="text-base font-bold text-[var(--text-primary)] mb-3">
+              2. Third-Party Affiliate Tracking
+            </h2>
+            <p className="mb-3">
+              When you follow an affiliate link, you are redirected to Coursera through an affiliate network (Impact Radius). Impact and/or Coursera may set cookies on your browser to attribute course enrollment to CourseDrop.
+            </p>
+            <p>
+              This third-party tracking is governed by{" "}
+              <a
+                href="https://www.coursera.org/about/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent-sage)] underline"
+              >
+                Coursera Privacy Policy
+              </a>{" "}
+              and Impact privacy standards.
+            </p>
+          </div>
 
-      <section className="mb-10">
-        <h2 className="text-xl font-semibold text-gray-100 mb-4">Cookies</h2>
-        <p className="text-gray-400">
-          CourseDrop does not set any first-party analytics cookies. We do not display a cookie consent banner because
-          we do not set tracking cookies ourselves.
-        </p>
-      </section>
+          <div className="editorial-card p-6 sm:p-8">
+            <h2 className="text-base font-bold text-[var(--text-primary)] mb-3">
+              3. Cookies and Analytics
+            </h2>
+            <p className="mb-3">
+              CourseDrop does not use Google Analytics, Meta Pixel, or intrusive tracking scripts. We do not set first-party tracking cookies on your device.
+            </p>
+            <p>
+              Because we do not use tracking cookies, no disruptive cookie banners are required on our website.
+            </p>
+          </div>
 
-      <p className="text-sm text-gray-600">
-        See also:{" "}
-        <Link href="/legal" className="underline hover:text-gray-400">
-          Terms of Service &amp; Affiliate Disclosure
-        </Link>
-      </p>
+          <div className="pt-4 flex items-center justify-between text-xs text-[var(--text-muted)]">
+            <Link href="/legal" className="text-[var(--accent-sage)] hover:underline">
+              Terms of Service →
+            </Link>
+            <Link href="/contact" className="hover:text-[var(--text-primary)]">
+              Privacy Inquiries
+            </Link>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

@@ -1,31 +1,169 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030712;   /* gray-950 */
-  --foreground: #f9fafb;   /* gray-50 */
-  --font-inter: "Inter", system-ui, sans-serif;
+  /* Editorial Light Mode (Reference: Warm cream, charcoal, sage green) */
+  --bg-page: #fbf9f5;
+  --bg-surface: #f4efe6;
+  --bg-card: #ffffff;
+  --bg-card-muted: #f7f3eb;
+  --text-primary: #1b1b18;
+  --text-secondary: #48453f;
+  --text-muted: #79756e;
+  --border-subtle: #e6dfd3;
+  --border-hover: #b4c4b6;
+  --accent-sage: #3f5844;
+  --accent-sage-hover: #324736;
+  --accent-sage-soft: #e5eee7;
+  --accent-sage-soft-text: #233b27;
+  --accent-free: #29683f;
+  --accent-free-soft: #e3f2e7;
+  --accent-free-soft-text: #174827;
+  --accent-band: #efe8dc;
+  --card-shadow: 0 2px 10px -2px rgba(27, 27, 24, 0.05), 0 8px 24px -4px rgba(27, 27, 24, 0.06);
+  --card-shadow-hover: 0 14px 36px -6px rgba(27, 27, 24, 0.11), 0 4px 12px -2px rgba(27, 27, 24, 0.05);
+
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-sans, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+}
+
+[data-theme="dark"], .dark {
+  /* Editorial Dark Mode (Warm charcoal, soft luminous sage, warm off-white) */
+  --bg-page: #131412;
+  --bg-surface: #1a1c18;
+  --bg-card: #1f211c;
+  --bg-card-muted: #252822;
+  --text-primary: #f5f4f0;
+  --text-secondary: #c7c6be;
+  --text-muted: #888981;
+  --border-subtle: #2d3129;
+  --border-hover: #4e5e4f;
+  --accent-sage: #7da885;
+  --accent-sage-hover: #93bfa0;
+  --accent-sage-soft: rgba(125, 168, 133, 0.15);
+  --accent-sage-soft-text: #bfe3c6;
+  --accent-free: #5cb878;
+  --accent-free-soft: rgba(92, 184, 120, 0.15);
+  --accent-free-soft-text: #a6e8b9;
+  --accent-band: #181a16;
+  --card-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.5);
+  --card-shadow-hover: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(125, 168, 133, 0.3);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --color-background: var(--bg-page);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-sans);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  min-height: 100dvh;
+  position: relative;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Smooth transitions for interactive elements */
-a, button {
-  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+/* GSAP & Lenis Smooth Scroll optimization */
+html.lenis, html.lenis body {
+  height: auto;
 }
 
-/* Gradient text utility */
-.gradient-text {
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Editorial subtle geometric texture */
+.editorial-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+  opacity: 0.35;
+}
+
+/* Editorial Tile Card */
+.editorial-card {
+  position: relative;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--card-shadow);
+  border-radius: 1rem;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Subtle decorative backdrop blob */
+.decorative-blob {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--accent-sage-soft) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Custom smooth scrollbar matching warm theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Micro-interactions */
+button, a.btn-interactive {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+button:active, a.btn-interactive:active {
+  transform: scale(0.98);
+}
+
+/* Keyboard accessibility */
+a:focus-visible, button:focus-visible, select:focus-visible {
+  outline: 2px solid var(--accent-sage);
+  outline-offset: 2px;
+}
+
+input:focus, input:focus-visible {
+  outline: none;
+}
+
+/* Editorial headline typography utility */
+.font-display {
+  letter-spacing: -0.025em;
+  font-weight: 600;
 }
