@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SearchBar } from "./SearchBar";
 import { SpotlightCard } from "./SpotlightCard";
 import { MotionFadeIn } from "./MotionWrapper";
-import { IconArrowRight, IconGraduationCap, IconShieldCheck, IconSparkles, IconStar } from "./Icons";
+import { IconArrowRight, IconGraduationCap, IconShieldCheck, IconStar } from "./Icons";
 import { Offer } from "@/types";
 
 import { Navbar } from "./Navbar";
@@ -98,11 +98,7 @@ export function HeroSection({ featuredOffer }: HeroSectionProps) {
             <MotionFadeIn delay={0.3} direction="left">
               <SpotlightCard className="editorial-card p-6 sm:p-7">
                 <div>
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-sage-soft)] px-3 py-1 text-xs font-semibold text-[var(--accent-sage-soft-text)] border border-[var(--border-subtle)]">
-                      <IconSparkles size={12} />
-                      <span>Featured Deal Spotlight</span>
-                    </span>
+                  <div className="flex items-center justify-end mb-4">
                     <span
                       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${
                         isFree
