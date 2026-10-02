@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AffiliateDisclosure } from "./AffiliateDisclosure";
-import { IconArrowRight, IconCheck, IconMail, IconSparkles } from "./Icons";
+import { IconArrowRight, IconCheck } from "./Icons";
 
 export function SiteFooter() {
   const [email, setEmail] = useState("");
@@ -27,10 +27,14 @@ export function SiteFooter() {
         {/* Newsletter & Brand Strip inspired by Image 1 */}
         <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 sm:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="max-w-md">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--accent-sage)] text-white">
-                <IconSparkles size={14} />
-              </span>
+            <div className="flex items-center gap-2.5 mb-2">
+              <Image
+                src="/logo.png"
+                alt="CourseDrop Logo"
+                width={32}
+                height={32}
+                className="h-7 w-auto object-contain"
+              />
               <span className="font-bold text-base text-[var(--text-primary)]">
                 CourseDrop Digest
               </span>

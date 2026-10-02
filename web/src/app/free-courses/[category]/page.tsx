@@ -3,6 +3,7 @@ import { CategoryNav } from "@/components/CategoryNav";
 import { Navbar } from "@/components/Navbar";
 import { OfferCard } from "@/components/OfferCard";
 import { IconGift } from "@/components/Icons";
+import { SectionDecorativeBackground } from "@/components/SectionDecorativeBackground";
 import { fetchCategories, fetchOffers } from "@/lib/api";
 
 interface FreeCategoryProps {
@@ -34,8 +35,9 @@ export default async function FreeCategoryPage({ params }: FreeCategoryProps) {
       <Navbar />
 
       <main className="flex-1">
-        <section className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] py-14 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
+        <section className="relative overflow-hidden border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-16 px-4 sm:px-6 lg:px-8">
+          <SectionDecorativeBackground variant="left" />
+          <div className="relative z-10 mx-auto max-w-4xl text-center">
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)]">
               Free {title} Courses
             </h1>

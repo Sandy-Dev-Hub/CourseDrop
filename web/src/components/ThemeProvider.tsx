@@ -29,20 +29,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           document.documentElement.classList.remove("dark");
         }
       } else {
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const initial = prefersDark ? "dark" : "light";
+        const initial = "light";
         setThemeState(initial);
         document.documentElement.setAttribute("data-theme", initial);
-        if (prefersDark) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
+        document.documentElement.classList.remove("dark");
       }
     } catch {
-      // Fallback if localStorage or matchMedia is restricted
+      // Fallback if localStorage is restricted
       setThemeState("light");
       document.documentElement.setAttribute("data-theme", "light");
+      document.documentElement.classList.remove("dark");
     }
     setMounted(true);
   }, []);

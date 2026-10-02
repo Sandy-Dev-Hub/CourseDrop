@@ -3,6 +3,7 @@ import { CategoryNav } from "@/components/CategoryNav";
 import { Navbar } from "@/components/Navbar";
 import { OfferCard } from "@/components/OfferCard";
 import { SearchBar } from "@/components/SearchBar";
+import { SectionDecorativeBackground } from "@/components/SectionDecorativeBackground";
 import { fetchCategories, fetchOffers } from "@/lib/api";
 
 export const metadata: Metadata = {
@@ -23,8 +24,9 @@ export default async function CoursesPage() {
       <Navbar />
 
       <main className="flex-1">
-        <section className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] py-12 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
+        <section className="relative overflow-hidden border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-16 px-4 sm:px-6 lg:px-8">
+          <SectionDecorativeBackground variant="split" />
+          <div className="relative z-10 mx-auto max-w-4xl text-center">
             <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
               Coursera Courses & Programs
             </h1>

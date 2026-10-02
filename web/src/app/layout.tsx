@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   robots: { index: true, follow: true },
+  other: {
+    "impact-site-verification": "21252960-8ea6-48eb-97ae-43c29c508e61",
+  },
 };
 
 export default function RootLayout({
@@ -38,8 +41,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var stored = localStorage.getItem('cd_theme');
-                  var supportDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  var theme = stored ? stored : (supportDark ? 'dark' : 'light');
+                  var theme = (stored === 'light' || stored === 'dark') ? stored : 'light';
                   document.documentElement.setAttribute('data-theme', theme);
                   if (theme === 'dark') {
                     document.documentElement.classList.add('dark');

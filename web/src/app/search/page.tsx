@@ -5,6 +5,7 @@ import { OfferCard } from "@/components/OfferCard";
 import { SearchBar } from "@/components/SearchBar";
 import { MotionFadeIn, MotionStaggerContainer, MotionStaggerItem } from "@/components/MotionWrapper";
 import { IconSearch } from "@/components/Icons";
+import { SectionDecorativeBackground } from "@/components/SectionDecorativeBackground";
 import { fetchOffers } from "@/lib/api";
 
 export const metadata: Metadata = {
@@ -36,8 +37,9 @@ export default async function SearchPage({
 
       <main className="flex-1 relative z-10">
         {/* Search header */}
-        <section className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] py-16 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
+        <section className="relative overflow-hidden border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-16 px-4 sm:px-6 lg:px-8">
+          <SectionDecorativeBackground variant="split" />
+          <div className="relative z-10 mx-auto max-w-3xl text-center">
             <MotionFadeIn delay={0.1}>
               <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)] mb-6">
                 Search Coursera Deals

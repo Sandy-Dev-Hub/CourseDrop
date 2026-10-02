@@ -20,7 +20,7 @@ export default function ErrorBoundary({
     <div className="flex min-h-screen flex-col bg-[var(--bg-page)] text-[var(--text-primary)]">
       <Navbar />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-20 text-center">
+      <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-20 sm:pt-36 sm:pb-24 text-center">
         <div className="max-w-md mx-auto">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-950/20 border border-red-800/40 text-red-400 mb-4">
             <IconAlertCircle size={28} />
