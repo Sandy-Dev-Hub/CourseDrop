@@ -19,7 +19,7 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="mt-auto border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] py-14 px-4 sm:px-8 lg:px-12 xl:px-16 transition-colors">
+    <footer className="mt-auto py-14 px-4 sm:px-8 lg:px-12 xl:px-16 transition-colors">
       <div className="mx-auto max-w-[1720px] space-y-12 w-full">
         {/* Top disclosure block */}
         <AffiliateDisclosure variant="footer" />

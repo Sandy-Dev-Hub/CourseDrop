@@ -15,6 +15,7 @@
   --accent-sage-hover: #324736;
   --accent-sage-soft: #e5eee7;
   --accent-sage-soft-text: #233b27;
+  --accent-highlight: rgba(63, 88, 68, 0.28);
   --accent-free: #29683f;
   --accent-free-soft: #e3f2e7;
   --accent-free-soft-text: #174827;
@@ -22,8 +23,12 @@
   --card-shadow: 0 2px 10px -2px rgba(27, 27, 24, 0.05), 0 8px 24px -4px rgba(27, 27, 24, 0.06);
   --card-shadow-hover: 0 14px 36px -6px rgba(27, 27, 24, 0.11), 0 4px 12px -2px rgba(27, 27, 24, 0.05);
 
-  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-sans: var(--font-sans, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  /* Typography roles. --nf-* are injected by next/font in layout.tsx.
+     display: Cormorant Garamond (h1/h2 only) | body: Raleway (prose)
+     ui: Work Sans (nav, buttons, badges, forms, labels, numerals) */
+  --font-display: var(--nf-display), "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: var(--nf-body), Raleway, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-ui: var(--nf-ui), "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 [data-theme="dark"], .dark {
@@ -41,6 +46,7 @@
   --accent-sage-hover: #93bfa0;
   --accent-sage-soft: rgba(125, 168, 133, 0.15);
   --accent-sage-soft-text: #bfe3c6;
+  --accent-highlight: rgba(125, 168, 133, 0.35);
   --accent-free: #5cb878;
   --accent-free-soft: rgba(92, 184, 120, 0.15);
   --accent-free-soft-text: #a6e8b9;
@@ -52,17 +58,41 @@
 @theme inline {
   --color-background: var(--bg-page);
   --color-foreground: var(--text-primary);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-ui);
+  --font-serif: var(--font-display);
+  --font-mono: var(--font-ui); /* no monospace webfont; numerals use .num */
 }
 
 body {
   background-color: var(--bg-page);
   color: var(--text-primary);
-  font-family: var(--font-sans);
+  font-family: var(--font-ui);
   overflow-x: hidden;
   min-height: 100dvh;
   position: relative;
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Role: display — major headings only (h1/h2). Never body/UI/numerals. */
+h1, h2 {
+  font-family: var(--font-display);
+  /* Cormorant has a small x-height; keep it optically level with the sans */
+  font-size-adjust: 0.5;
+}
+/* Thin serif strokes wash out on dark; nudge weight up in dark mode */
+[data-theme="dark"] h1, [data-theme="dark"] h2, .dark h1, .dark h2 { font-weight: 700; }
+
+/* Role: body — longer descriptive text */
+p, blockquote, figcaption, dd {
+  font-family: var(--font-body);
+  font-variant-numeric: lining-nums;
+}
+
+/* Role: UI numerals — prices, discounts, stats, codes. Tabular for alignment. */
+.num {
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 /* GSAP & Lenis Smooth Scroll optimization */
@@ -164,6 +194,168 @@ input:focus, input:focus-visible {
 
 /* Editorial headline typography utility */
 .font-display {
-  letter-spacing: -0.025em;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
   font-weight: 600;
+}
+
+
+/* ============================================================
+   How CourseDrop Works
+   Baseline (mobile + prefers-reduced-motion): heading on top, cards in a
+   static grid. Stacking: >= 1024px with motion allowed — pure CSS sticky,
+   left column of full-height sticky cards, right column pinned heading.
+   No JS, so native scroll / keyboard / anchors keep working with Lenis.
+   ============================================================ */
+.process { position: relative; isolation: isolate; }
+/* Hero-style atmosphere. `overflow: clip` (not hidden) keeps sticky working. */
+.process__bg { position: absolute; inset: 0; z-index: 0; overflow: clip; pointer-events: none; }
+/* Feather top/bottom edges into the page so there is no visible seam */
+.process__bg::before,
+.process__bg::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 5rem;
+  z-index: 2;
+}
+.process__bg::before { top: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg-page) 60%, transparent), transparent); }
+.process__bg::after { bottom: 0; background: linear-gradient(to top, color-mix(in srgb, var(--bg-page) 60%, transparent), transparent); }
+.process__bg-pin {
+  position: relative;
+  height: 100%;
+  background: var(--bg-page) url("/process-bg.png") center / cover no-repeat;
+}
+/* The artwork is light-only: in dark mode mute it under the page colour. */
+[data-theme="dark"] .process__bg-pin::after,
+.dark .process__bg-pin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg-page);
+  opacity: 0.9;
+}
+.process__layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-block: 4rem;
+}
+.process__heading { font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1.08; }
+.process__steps { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.process__card { padding: 1.75rem; }
+.process__card:hover { transform: none; }
+.process__title { font-family: var(--font-display); font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.01em; font-weight: 700; }
+.process__desc { font-size: 1rem; }
+.process__detail { font-size: 0.9rem; }
+
+@media (min-width: 640px) {
+  .process__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Mobile/tablet: simple fade-in per card (progressive, transform/opacity only) */
+@media (max-width: 1023.98px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .process__card {
+      animation: process-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+@keyframes process-fade {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  /* Keep the backdrop viewport-sized while the section scrolls */
+  .process__bg-pin { position: sticky; top: 0; height: 100vh; }
+  .process__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    padding-block: 0;
+    align-items: stretch;
+  }
+  /* Right: heading pinned for the whole stacking sequence. Order puts it right. */
+  .process__aside { order: 2; }
+  .process__aside-inner {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .process__heading { font-size: clamp(3rem, 5.5vw, 5.5rem); line-height: 1.02; }
+
+  /* Left: one sticky full-height slot per card; later cards stack on top. */
+  .process__steps { order: 1; display: block; }
+  .process__item {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .process__card {
+    width: 100%;
+    max-width: 30rem;
+    min-height: 22rem;
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg-card); /* opaque so stacked cards fully cover */
+    box-shadow: var(--card-shadow-hover);
+    will-change: transform;
+  }
+  .process__item:nth-child(odd) .process__card { transform: rotate(-2deg); }
+  .process__item:nth-child(even) .process__card { transform: rotate(1.5deg); }
+  .process__item:nth-child(3) .process__card { transform: rotate(-1deg); }
+  .process__title { font-size: clamp(2rem, 3vw, 2.75rem); }
+  .process__desc { font-size: 1.05rem; }
+  .process__detail { font-size: 0.95rem; }
+}
+
+/* ============================================================
+   Rough Notation Hero Highlight
+   Hand-drawn rough highlighter marker via Rough Notation library.
+   Tightly scoped inline-block targets to hug letter height snugly.
+   ============================================================ */
+.rn-highlight-wrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.rn-highlight-target {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+  line-height: 0.78;
+  padding: 0 4px;
+  z-index: 1;
+  color: var(--text-primary);
+  transition: color 450ms ease;
+}
+
+.rn-highlight-target.is-highlighted {
+  color: var(--accent-sage);
+}
+
+.rn-highlight-wrapper svg.rough-annotation {
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rn-highlight-target {
+    color: var(--accent-sage);
+    transition: none;
+  }
 }

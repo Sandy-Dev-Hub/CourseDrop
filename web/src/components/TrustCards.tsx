@@ -19,7 +19,7 @@ export function TrustCards() {
   ];
 
   return (
-    <section className="py-14 px-4 sm:px-8 lg:px-12 xl:px-16 border-b border-[var(--border-subtle)] bg-[var(--bg-page)]">
+    <section className="py-14 px-4 sm:px-8 lg:px-12 xl:px-16">
       <div className="mx-auto max-w-[1720px] w-full">
         <div className="mb-10 text-center sm:text-left">
           <span className="text-[11px] font-bold uppercase tracking-widest text-[var(--accent-sage)]">

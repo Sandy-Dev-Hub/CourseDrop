@@ -150,7 +150,7 @@ export default async function CourseDetailPage({ params }: CourseDetailProps) {
                     </div>
                     <div className="py-3.5 flex justify-between">
                       <dt className="text-[var(--text-muted)]">Catalog Slug</dt>
-                      <dd className="font-mono text-[var(--text-secondary)]">{course.slug}</dd>
+                      <dd className="num text-[var(--text-secondary)]">{course.slug}</dd>
                     </div>
                     <div className="py-3.5 flex justify-between">
                       <dt className="text-[var(--text-muted)]">Status</dt>
@@ -227,14 +227,14 @@ export default async function CourseDetailPage({ params }: CourseDetailProps) {
                       {isFree ? (
                         <span className="text-3xl font-bold text-[var(--accent-free)]">FREE</span>
                       ) : activeOffer?.discounted_price !== null && activeOffer?.discounted_price !== undefined ? (
-                        <span className="text-3xl font-bold text-[var(--text-primary)] font-mono">
+                        <span className="text-3xl font-bold text-[var(--text-primary)] num">
                           ${Number(activeOffer.discounted_price).toFixed(2)}
                         </span>
                       ) : (
                         <span className="text-xl font-bold text-[var(--text-primary)]">Special Pricing</span>
                       )}
                       {activeOffer?.original_price !== null && activeOffer?.original_price !== undefined && (
-                        <span className="text-sm text-[var(--text-muted)] line-through font-mono">
+                        <span className="text-sm text-[var(--text-muted)] line-through num">
                           ${Number(activeOffer.original_price).toFixed(2)}
                         </span>
                       )}

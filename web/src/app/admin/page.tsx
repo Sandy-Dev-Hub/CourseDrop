@@ -161,7 +161,7 @@ export default function AdminPage() {
 
             {jobStatus && (
               <div
-                className={`rounded-xl border p-4 text-xs font-mono transition-all ${
+                className={`rounded-xl border p-4 text-xs num transition-all ${
                   jobStatus.startsWith("Error")
                     ? "border-red-800/40 bg-red-950/20 text-red-400"
                     : jobStatus.startsWith("Success")

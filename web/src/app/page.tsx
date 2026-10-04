@@ -11,6 +11,7 @@ import { TrustCards } from "@/components/TrustCards";
 import { CtaBand } from "@/components/CtaBand";
 import { MotionFadeIn, MotionStaggerContainer, MotionStaggerItem } from "@/components/MotionWrapper";
 import { IconArrowRight, IconGift, IconTag } from "@/components/Icons";
+import { ScrollUnderline } from "@/components/ScrollUnderline";
 import { fetchCategories, fetchOffers } from "@/lib/api";
 
 export const metadata: Metadata = {
@@ -58,7 +59,7 @@ export default async function HomePage() {
                 <span>FEATURED SAVINGS</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
-                Latest Verified Deals
+                <ScrollUnderline>Latest Verified Deals</ScrollUnderline>
               </h2>
             </div>
 
@@ -87,7 +88,7 @@ export default async function HomePage() {
 
         {/* 100% Free Spotlight Section */}
         {freeOffers.length > 0 && (
-          <section className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] py-16 px-4 sm:px-8 lg:px-12 xl:px-16">
+          <section className="py-16 px-4 sm:px-8 lg:px-12 xl:px-16">
             <div className="mx-auto max-w-[1720px]">
               <div className="flex items-center justify-between mb-8">
                 <div>

@@ -23,21 +23,22 @@ export function MotionFadeIn({
   }
 
   const offset = 18;
+  const hasTransform = direction !== "none";
   const initialOffset =
     direction === "up"
-      ? { y: offset, x: 0 }
+      ? { y: offset }
       : direction === "down"
-      ? { y: -offset, x: 0 }
+      ? { y: -offset }
       : direction === "left"
-      ? { x: offset, y: 0 }
+      ? { x: offset }
       : direction === "right"
-      ? { x: -offset, y: 0 }
-      : { x: 0, y: 0 };
+      ? { x: -offset }
+      : {};
 
   return (
     <motion.div
       initial={{ opacity: 0, ...initialOffset }}
-      animate={{ opacity: 1, x: 0, y: 0 }}
+      animate={{ opacity: 1, ...(hasTransform ? { x: 0, y: 0 } : {}) }}
       transition={{
         duration: 0.5,
         delay,

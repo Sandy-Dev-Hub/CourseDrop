@@ -4,7 +4,7 @@ import { SectionDecorativeBackground } from "./SectionDecorativeBackground";
 
 export function CtaBand() {
   return (
-    <section className="relative overflow-hidden py-14 px-4 sm:px-8 lg:px-12 xl:px-16 bg-[var(--accent-band)] border-b border-[var(--border-subtle)]">
+    <section className="relative overflow-hidden py-14 px-4 sm:px-8 lg:px-12 xl:px-16">
       <SectionDecorativeBackground variant="minimal" />
       <div className="relative z-10 mx-auto max-w-[1720px] w-full">
         <div className="editorial-card bg-[var(--bg-surface)] p-8 sm:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">

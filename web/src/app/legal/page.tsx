@@ -40,7 +40,7 @@ export default function LegalPage() {
               <strong className="text-[var(--text-primary)]">CourseDrop is not affiliated with or endorsed by Coursera.</strong> All course titles, trademarks, and logos belong to their respective owners.
             </p>
             <p>
-              All affiliate links carry <code className="text-[var(--accent-sage)] font-mono text-xs">rel=&quot;sponsored nofollow noopener&quot;</code> attributes in compliance with web standards.
+              All affiliate links carry <code className="text-[var(--accent-sage)] num text-xs">rel=&quot;sponsored nofollow noopener&quot;</code> attributes in compliance with web standards.
             </p>
           </div>
 

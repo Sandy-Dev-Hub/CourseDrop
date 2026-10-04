@@ -81,14 +81,14 @@ export function OfferCard({ offer }: OfferCardProps) {
             {isFree ? (
               <span className="text-xl font-bold text-[var(--accent-free)]">FREE</span>
             ) : offer.discounted_price !== null && offer.discounted_price !== undefined ? (
-              <span className="text-xl font-bold text-[var(--text-primary)] font-mono">
+              <span className="text-xl font-bold text-[var(--text-primary)] num">
                 ${Number(offer.discounted_price).toFixed(2)}
               </span>
             ) : (
               <span className="text-sm font-semibold text-[var(--accent-sage)]">Discounted</span>
             )}
             {offer.original_price !== null && offer.original_price !== undefined && (
-              <span className="text-xs text-[var(--text-muted)] line-through font-mono">
+              <span className="text-xs text-[var(--text-muted)] line-through num">
                 ${Number(offer.original_price).toFixed(2)}
               </span>
             )}

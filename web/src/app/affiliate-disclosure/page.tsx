@@ -57,7 +57,7 @@ export default function AffiliateDisclosurePage() {
               <span>Link Compliance & Editorial Independence</span>
             </h2>
             <p className="mb-3">
-              All promotional outbound links on CourseDrop use the <code className="text-[var(--accent-sage)] font-mono text-xs">rel=&quot;sponsored nofollow noopener&quot;</code> attribute in accordance with FTC guidelines and search engine standards.
+              All promotional outbound links on CourseDrop use the <code className="text-[var(--accent-sage)] num text-xs">rel=&quot;sponsored nofollow noopener&quot;</code> attribute in accordance with FTC guidelines and search engine standards.
             </p>
             <p>
               We maintain strict editorial standards: commissions never influence which deals are featured as top offers or marked as verified.

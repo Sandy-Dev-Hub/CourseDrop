@@ -41,7 +41,7 @@ export function StatsBand({
   ];
 
   return (
-    <section className="border-y border-[var(--border-subtle)] bg-[var(--accent-band)] py-12 px-4 sm:px-8 lg:px-12 xl:px-16">
+    <section className="py-12 px-4 sm:px-8 lg:px-12 xl:px-16">
       <div className="mx-auto max-w-[1720px] w-full">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, idx) => (
@@ -49,7 +49,7 @@ export function StatsBand({
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
                 {stat.icon}
               </div>
-              <span className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)] font-mono">
+              <span className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)] num">
                 {stat.value}
               </span>
               <span className="mt-1 text-xs sm:text-sm font-semibold text-[var(--text-primary)]">

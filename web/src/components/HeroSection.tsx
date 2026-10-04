@@ -9,6 +9,7 @@ import { Offer } from "@/types";
 
 import { Navbar } from "./Navbar";
 import { HeroDecorativeBackground } from "./HeroDecorativeBackground";
+import { HeroHighlightHeadline } from "./HeroHighlightHeadline";
 
 interface HeroSectionProps {
   featuredOffer?: Offer | null;
@@ -32,7 +33,7 @@ export function HeroSection({ featuredOffer }: HeroSectionProps) {
   const isFree = displayOffer.offer_type === "FREE_ACCESS" || displayOffer.discount_percentage === 100;
 
   return (
-    <section className="relative overflow-hidden border-b border-[var(--border-subtle)] bg-[var(--bg-page)] min-h-screen flex flex-col justify-between">
+    <section className="relative overflow-hidden bg-[var(--bg-page)] min-h-screen flex flex-col justify-between">
       {/* Decorative Atmosphere Background Layer */}
       <HeroDecorativeBackground />
 
@@ -43,10 +44,8 @@ export function HeroSection({ featuredOffer }: HeroSectionProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* Left Column: Asymmetric Editorial Typography & Search */}
           <div className="lg:col-span-7 space-y-6">
-            <MotionFadeIn delay={0.1}>
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.12]">
-                Save on top Coursera courses and specializations.
-              </h1>
+            <MotionFadeIn delay={0.1} direction="none">
+              <HeroHighlightHeadline />
             </MotionFadeIn>
 
             <MotionFadeIn delay={0.3}>
@@ -150,6 +149,12 @@ export function HeroSection({ featuredOffer }: HeroSectionProps) {
           </div>
         </div>
       </div>
+
+      {/* Soft fade so the hero melts into the next section (no hard edge) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-20 bg-gradient-to-b from-transparent to-[var(--bg-page)]/60"
+      />
     </section>
   );
 }

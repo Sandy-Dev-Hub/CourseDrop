@@ -1,13 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Cormorant_Garamond, Raleway, Work_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 
-const inter = Inter({
+// Type system: display (Cormorant Garamond) / body (Raleway) / UI + numerals (Work Sans).
+// Latin subset only; Cormorant loads just the weights used (no italics).
+const display = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["500", "600", "700"],
+  style: "normal",
+  variable: "--nf-display",
+  display: "swap",
+});
+
+const body = Raleway({
+  subsets: ["latin"],
+  variable: "--nf-body",
+  display: "swap",
+});
+
+const ui = Work_Sans({
+  subsets: ["latin"],
+  variable: "--nf-ui",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${display.variable} ${body.variable} ${ui.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
