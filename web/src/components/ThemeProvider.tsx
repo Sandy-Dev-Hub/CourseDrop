@@ -78,7 +78,7 @@ export function useTheme() {
 }
 
 export function ThemeToggle({ className = "" }: { className?: string }) {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -87,29 +87,83 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
 
   if (!mounted) {
     return (
-      <button
-        aria-label="Toggle visual theme"
-        className={`flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors ${className}`}
+      <div
+        aria-hidden="true"
+        className={`relative inline-flex h-8 w-[68px] items-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-0.5 ${className}`}
       >
-        <span className="h-4 w-4" />
-      </button>
+        <span className="flex h-7 w-7 items-center justify-center opacity-40">
+          <IconMoon size={14} />
+        </span>
+        <span className="flex h-7 w-7 items-center justify-center opacity-40">
+          <IconSun size={14} />
+        </span>
+      </div>
     );
   }
 
   const isDark = theme === "dark";
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      setTheme("dark");
+    } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      setTheme("light");
+    }
+  };
+
   return (
-    <button
-      onClick={toggleTheme}
-      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-      title={`Switch to ${isDark ? "light" : "dark"} mode`}
-      className={`flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)] active:scale-95 transition-all ${className}`}
+    <div
+      role="radiogroup"
+      aria-label="Theme preference"
+      onKeyDown={handleKeyDown}
+      className={`relative inline-flex h-8 items-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-0.5 shadow-xs transition-colors ${className}`}
     >
-      {isDark ? (
-        <IconSun size={15} className="text-amber-400 transition-transform duration-200" />
-      ) : (
-        <IconMoon size={15} className="text-[var(--accent-sage)] transition-transform duration-200" />
-      )}
-    </button>
+      {/* Animated active-segment highlight pill */}
+      <div
+        aria-hidden="true"
+        className={`absolute top-0.5 bottom-0.5 left-0.5 w-7 rounded-full bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-xs transition-transform duration-250 ease-out motion-reduce:transition-none ${
+          isDark ? "translate-x-0" : "translate-x-7"
+        }`}
+      />
+
+      {/* Dark theme segment (Moon - Left) */}
+      <button
+        type="button"
+        role="radio"
+        aria-checked={isDark}
+        aria-label="Dark theme"
+        title="Dark theme"
+        tabIndex={isDark ? 0 : -1}
+        onClick={() => setTheme("dark")}
+        className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full text-xs transition-colors focus-visible:outline-2 focus-visible:outline-[var(--accent-sage)] focus-visible:outline-offset-1 ${
+          isDark
+            ? "text-amber-300 font-semibold"
+            : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+        }`}
+      >
+        <IconMoon size={14} />
+      </button>
+
+      {/* Light theme segment (Sun - Right) */}
+      <button
+        type="button"
+        role="radio"
+        aria-checked={!isDark}
+        aria-label="Light theme"
+        title="Light theme"
+        tabIndex={!isDark ? 0 : -1}
+        onClick={() => setTheme("light")}
+        className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full text-xs transition-colors focus-visible:outline-2 focus-visible:outline-[var(--accent-sage)] focus-visible:outline-offset-1 ${
+          !isDark
+            ? "text-amber-500 font-semibold"
+            : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+        }`}
+      >
+        <IconSun size={14} />
+      </button>
+    </div>
   );
 }
+

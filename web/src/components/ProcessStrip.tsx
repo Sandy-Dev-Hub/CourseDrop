@@ -1,4 +1,4 @@
-import { IconCheck, IconClock, IconSearch, IconSparkles } from "./Icons";
+import Image from "next/image";
 
 /**
  * Copy is grounded in the real backend rules:
@@ -13,7 +13,7 @@ const STEPS = [
     desc: "Aggregating daily promotions from direct Coursera affiliate data.",
     detail:
       "Offers come from the Impact affiliate feed, manual entry, or official sources. Nothing is scraped.",
-    Icon: IconSearch,
+    imageSrc: "/step-discover.png",
   },
   {
     num: "02",
@@ -21,7 +21,7 @@ const STEPS = [
     desc: "Checking active coupons, discount percentages, and landing URLs.",
     detail:
       "Every link must point to an approved tracking host, and listed prices are cross-checked against the stated discount before an offer goes live.",
-    Icon: IconCheck,
+    imageSrc: "/step-verify.png",
   },
   {
     num: "03",
@@ -29,7 +29,7 @@ const STEPS = [
     desc: "Continuous monitoring of validity dates and new cohort openings.",
     detail:
       "Offers are re-checked regularly: scheduled ones go live at their start date, and active ones expire automatically once their listed end date passes.",
-    Icon: IconClock,
+    imageSrc: "/step-track.png",
   },
   {
     num: "04",
@@ -37,7 +37,7 @@ const STEPS = [
     desc: "Direct sponsored links and instant one-click coupon copying.",
     detail:
       "You get a direct tracking link to Coursera, plus a visible promo code whenever the source provided one.",
-    Icon: IconSparkles,
+    imageSrc: "/step-save.png",
   },
 ];
 
@@ -79,16 +79,19 @@ export function ProcessStrip() {
           {STEPS.map((step, idx) => (
             <li key={step.num} className="process__item" data-index={idx}>
               <figure className="process__card editorial-card m-0">
-                <div className="flex items-center gap-3 mb-5">
+                <div className="flex items-center gap-3.5 mb-5">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-sage-soft)] border border-[var(--border-subtle)] text-xs font-bold num text-[var(--accent-sage-soft-text)]">
                     {step.num}
                   </span>
-                  <span
-                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]"
-                    aria-hidden="true"
-                  >
-                    <step.Icon size={18} className="text-[var(--accent-sage)]" />
-                  </span>
+                  <div className="flex items-center justify-center" aria-hidden="true">
+                    <Image
+                      src={step.imageSrc}
+                      alt=""
+                      width={44}
+                      height={44}
+                      className="h-10 w-10 sm:h-11 sm:w-11 object-contain dark:invert dark:brightness-110 transition-all"
+                    />
+                  </div>
                 </div>
                 <h3 className="process__title font-semibold text-[var(--text-primary)]">{step.title}</h3>
                 <figcaption className="mt-3 space-y-2">
@@ -103,3 +106,4 @@ export function ProcessStrip() {
     </section>
   );
 }
+
